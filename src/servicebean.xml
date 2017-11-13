@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+	default-lazy-init="true">
+	
+	<context:annotation-config />
+	<context:component-scan base-package="com.works"></context:component-scan>
+
+	<bean id="movie2" class="com.works.beans.Movies" scope="prototype">
+		<property name="id">
+			<value>1</value>
+		</property>
+		<property name="name" value="Man of steel" />
+		<property name="price" value="300" />
+	</bean>
+
+	<bean id="lor" class="com.works.beans.Movies" scope="prototype">
+		<constructor-arg value="Lord of the Rings" />
+		<constructor-arg value="250"></constructor-arg>
+		<property name="id" value="2"></property>
+	</bean>
+
+	<bean id="bat" factory-bean="movieFactory" factory-method="getMovie"
+		class="com.works.beans.Movies" />
+
+	<bean id="movieFactory" class="com.works.factory.MovieFactory" />
+
+	<bean id="meen" class="com.works.beans.Theater" depends-on="movie2" init-method="initMethod">
+		<property name="id" value="1" />
+		<property name="name" value="Meenakshi" />
+		<property name="location" value="Bannergatta" />
+		<property name="movie" ref="movie2" />
+	</bean>
+	
+	<!-- <bean id="theaterDAOObject" class="com.works.dao.TheaterDAOImpl" />
+	
+	<bean id="theaterServiceObject" class="com.works.service.TheaterServiceImpl" autowire="byType" /> -->
+
+</beans>
